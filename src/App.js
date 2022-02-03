@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React, {useState} from 'react';
 
 function App() {
+ const [ color, setColor] = useState('white')
+ const [ids, setIds] = useState([])
+
+ const blocks = [
+  [{id: 1}, {id: 2}, {id: 3}],
+  [{id: 4}, {id: 5}, {id: 6}],
+  [{id: 7}, {id: 8}, {id: 9} ]
+ ]
+
+ const find_index = (id) => {
+    return ids.includes(id)
+ }
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {blocks.map(block_set => (
+            <div className='row'>
+              {block_set.map(block => (
+                   <div  
+                    className={`block ${color == 'red' ? find_index(block.id) ? `block-red` : `` : ``}`} 
+                   onClick={() => {
+                     color == 'red' ? setColor('white') : setColor('red')
+                     setIds([...ids, block.id])
+                   }}
+                   ></div>
+              ))}
+            </div>
+        ))}
     </div>
   );
 }
